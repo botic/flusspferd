@@ -25,4 +25,4 @@ Flusspferd will scan the `content` folder for markdown files and puts the result
 All static files from the `static` folder will be copied to `output`.
 You must provide a template named `base.html` in the `template` folder.
 This template ist the master for all generated pages and will be rendered providing two properties: `content` and `title`.
-If your markdown file starts with an <h1>, this will be the title for the page, otherwise its emtpy.
+If your markdown file starts with an &lt;h1&gt;, this will be the title for the page, otherwise its emtpy.
