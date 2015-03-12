@@ -1,0 +1,16 @@
+{
+   "name": "flusspferd",
+   "version": "0.1",
+   "description": "A simple static site generator for RingoJS.",
+   "maintainers": [{
+      "name": "Philipp Naderer",
+      "email": "philipp.naderer@gmail.com"
+   }],
+   "dependencies": {
+      "commonmark": ">=0.17",
+      "reinhardt": ">=0.3"
+   },
+   "engines": {
+      "ringojs": ">= 0.11"
+   }
+}
