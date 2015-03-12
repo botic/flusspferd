@@ -6,6 +6,7 @@ var system = require("system");
 var {Parser} = require("ringo/args");
 var logger = require("ringo/logging").getLogger(module.id);
 var objects = require("ringo/utils/objects");
+var strings = require("ringo/utils/strings");
 
 // external modules
 var commonmark = require("commonmark");
@@ -69,10 +70,14 @@ var main = function(args) {
 
    // now process the markdown files
    mdFiles = mdFiles.map(function(vinyl) {
+      let content = commonmark.process(fs.read(vinyl.path));
+      let title = strings.startsWith(content, "<h1>") ? content.substring(4, content.indexOf("</h1>")) : "";
+
       return objects.merge(vinyl, {
          "html": template.render({
             "vinyl": vinyl,
-            "content": commonmark.process(fs.read(vinyl.path))
+            "title": title,
+            "content": content
          })
       });
    });
