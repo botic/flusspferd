@@ -10,7 +10,7 @@ var strings = require("ringo/utils/strings");
 
 // external modules
 var commonmark = require("commonmark");
-var {Environment} = require("reinhardt");
+var {Reinhardt} = require("reinhardt");
 
 // app-specific modules
 var scanner = require("./lib/scanner");
@@ -61,7 +61,7 @@ var main = function(args) {
    }
 
    // configures the templating environment
-   let templateEnv = new Environment({
+   let templateEnv = new Reinhardt({
       loader: templateDir
    });
    let template = templateEnv.getTemplate("base.html");
