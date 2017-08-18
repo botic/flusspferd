@@ -1,24 +1,24 @@
 "use strict";
 
 // Ringo modules
-var fs = require("fs");
-var system = require("system");
-var {Parser} = require("ringo/args");
-var logger = require("ringo/logging").getLogger(module.id);
-var objects = require("ringo/utils/objects");
-var strings = require("ringo/utils/strings");
+const fs = require("fs");
+const system = require("system");
+const {Parser} = require("ringo/args");
+const logger = require("ringo/logging").getLogger(module.id);
+const objects = require("ringo/utils/objects");
+const strings = require("ringo/utils/strings");
 
 // external modules
-var commonmark = require("commonmark");
-var {Reinhardt} = require("reinhardt");
+const commonmark = require("commonmark");
+const {Reinhardt} = require("reinhardt");
 
 // app-specific modules
-var scanner = require("./lib/scanner");
+const scanner = require("./lib/scanner");
 
 // Java NIO
-var defaultFS = java.nio.file.FileSystems.getDefault();
+const defaultFS = java.nio.file.FileSystems.getDefault();
 
-var main = function(args) {
+const main = function(args) {
    let contentDir, outputDir, staticDir, templateDir;
 
    if (args.length === 1) {
@@ -29,6 +29,32 @@ var main = function(args) {
          templateDir = fs.join(args[0], "templates");
       }
    } else {
+      if (args.length === 2 && args[0] === "init") {
+         const emptyProjectDir = args[1];
+         if (!fs.isDirectory(emptyProjectDir)) {
+            logger.error("Could not initialize project in non-existing directory {}", emptyProjectDir);
+            return 1;
+         } else if (fs.list(emptyProjectDir).some(function(file) { return file.charAt(0) !== "." })) {
+            logger.error("Could not initialize project in non-empty directory {}", emptyProjectDir);
+            return 1;
+         } else {
+            fs.makeDirectory(fs.join(emptyProjectDir, "content"));
+            fs.makeDirectory(fs.join(emptyProjectDir, "output"));
+            fs.makeDirectory(fs.join(emptyProjectDir, "static"));
+            fs.makeDirectory(fs.join(emptyProjectDir, "templates"));
+            fs.write(fs.join(emptyProjectDir, "content", "index.md"), "# Hello World!\n\n Edit me.");
+            fs.write(fs.join(emptyProjectDir, "static", "main.css"), "html { background: LightCyan; }\n\nh1 { color: DarkSlateBlue; }");
+            fs.write(fs.join(emptyProjectDir, "templates", "base.html"),
+                "<!DOCTYPE html>\n<html><head><title>{{ title }}</title>" +
+                "<link rel='stylesheet' href='./static/main.css'></head>" +
+                "<body>{{ content|safe }}</body>" +
+                "</html>");
+         }
+
+         logger.info("Created project stub at {}", emptyProjectDir);
+         return 0;
+      }
+
       let parser = new Parser();
       parser.addOption("c", "content", "CONTENT-DIR", "Directory containing the markdown content files.");
       parser.addOption("o", "output", "OUTPUT-DIR", "Output directory for the parsed and generated files.");

@@ -3,6 +3,11 @@
 Flusspferd is a simple static site generator based RingoJS. It takes markdown files, processes them and uses
 reinhardt templates to generate the final HTML.
 
+## Getting started
+
+You can generate a project stub by running flusspferd's
+main script with the init parameter: `ringo main.js init /path/to/emtpy-project/`
+
 ## Convention over configuration
 
 The easiest way to run flusspferd is to generate a project with the folders `content`, `output`, `static` and `templates`.

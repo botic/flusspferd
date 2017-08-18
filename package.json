@@ -7,10 +7,10 @@
       "email": "philipp.naderer@gmail.com"
    }],
    "dependencies": {
-      "commonmark": ">=0.27",
+      "commonmark": ">=0.28",
       "reinhardt": ">=0.4"
    },
    "engines": {
-      "ringojs": ">= 1.0.0"
+      "ringojs": ">= 1.1.0"
    }
 }
