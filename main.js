@@ -17,6 +17,9 @@ const main = function(args) {
             outputDir = fs.join(args[0], "output");
             staticDir = fs.join(args[0], "static");
             templateDir = fs.join(args[0], "templates");
+        } else {
+            logger.error("Cannot read directory {}", fs.absolute(args[0]));
+            return 1;
         }
     } else if (args.length === 2) {
         if (args[0] === "init") {
