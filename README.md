@@ -6,7 +6,13 @@ reinhardt templates to generate the final HTML.
 ## Getting started
 
 You can generate a project stub by running flusspferd's
-main script with the init parameter: `ringo main.js init /path/to/emtpy-project/`
+main script with the init parameter:
+
+`ringo main.js init /path/to/emtpy-project/`
+
+A good way to automatically update the output during development is `fswatch`, a cross-platform file change monitor. If you update one of your sources in the `content`, `templates`, or `static` dir, it will notify you about the changes. Here an example:
+
+`fswatch -o /code/example.com/content/ /code/example.com/templates/ /code/example.com/static/ | xargs -n1 -I{} ringo main.js /code/example.com/`
 
 ## Convention over configuration
 
